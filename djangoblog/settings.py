@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # standard with Django
 SECRET_KEY = 'django-insecure-f9*7^kz&dtfht@nu=e3--5tftz9m#xxlax4n@rajvzha&jlo-v' # secret key standard with Django
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # this set to True upon new project creation
+DEBUG = True # this set to True upon new project creation
 
 ALLOWED_HOSTS = ['snerdblog.herokuapp.com'] # this list is empty upon new project creation
 
