@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # standard with Django
 SECRET_KEY = os.environ.get('SECRET_DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG_VALUE') # this set to True upon new project creation
+DEBUG = (os.environ.get('DEBUG_VALUE')=='True') # this set to True upon new project creation
 
 ALLOWED_HOSTS = ['snerdblog.herokuapp.com'] # this list is empty upon new project creation
 
