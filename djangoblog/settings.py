@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # standard with Django
 SECRET_KEY = 'django-insecure-f9*7^kz&dtfht@nu=e3--5tftz9m#xxlax4n@rajvzha&jlo-v' # secret key standard with Django
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # this set to True upon new project creation
+DEBUG = True # this set to True upon new project creation
 
 ALLOWED_HOSTS = ['snerdblog.herokuapp.com'] # this list is empty upon new project creation
 
@@ -130,21 +130,23 @@ STATIC_URL = 'static/' # standard with Django
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # standard with Django
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
+
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_POST = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'snerdapps@gmail.com' # enviornment variable
-EMAIL_HOST_PASSWORD = 'rsftyavyfmrgwtdj' # enviornment variable
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY_ID') # enviornment variable
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY') # enviornment variable
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_BUCKET_NAME')  # enviornment variable
-
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
