@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404 # this import standard with django
-from .models import Post
+from .models import Post,Comment
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView,UpdateView,DeleteView
@@ -94,4 +94,11 @@ class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
             return True
         else:
             return False
-    
+
+class CommentCreateView(LoginRequiredMixin,CreateView):
+    model = Comment
+    fields = ['content']
+
+    def form_valid(self,form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
