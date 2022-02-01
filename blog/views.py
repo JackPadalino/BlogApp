@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from .forms import CommentForm
 
 # Create your views here.
 def home(request):
@@ -54,9 +55,45 @@ class UserPostListView(ListView):
         return posts
 
 
+#class PostDetailView(DetailView):
+#    model = Post
+#    template_name ='blog/post_details.html'
+
+def PostDetailView(request,pk):
+    post = Post.objects.get(id=pk)
+
+    context = {
+        'post': post,
+    }
+
+    return render(request, 'blog/post_details.html', context)
+
+'''
 class PostDetailView(DetailView):
     model = Post
     template_name ='blog/post_details.html'
+    context_object_name='post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = Post.objects.get(id=self.pk)
+        num_comments = Comment.objects.filter(=eachProduct).count()
+        return context
+
+    # here we are querying all the comments associated with a post object, then forwarding that query set to the template
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        comments = Comment.objects.filter(post=self.get_object()).order_by('-date_posted')
+        data['comments'] = comments
+        if self.request.user.is_authenticated:
+            data['comment_form'] = CommentForm(instance=self.request.user)
+        return data
+
+    def post(self, request, *args, **kwargs):
+        new_comment = Comment(author=self.request.user,Post=self.get_object(),content=request.POST.get('content'))
+        new_comment.save()
+        return self.get(self, request, *args, **kwargs)
+'''
 
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post

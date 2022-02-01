@@ -25,7 +25,6 @@ class Comment(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
 
-
     def __str__(self):
         return f'{self.content} | {self.date_posted} | {self.author}'
     
