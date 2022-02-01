@@ -29,12 +29,6 @@ def newpost(request):
     }
     return render(request,'blog/newpost.html',context)
 
-#def blog(request):
-#    context = {
-#        'posts':Post.objects.all()
-#    }
-#    return render(request,'blog/blog.html',context)
-
 # here we are going to make a 'class view' that will render a page that allows user to CRUD posts
 class PostListView(ListView):
     model = Post
@@ -110,32 +104,6 @@ class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
             return True
         else:
             return False
-
-'''@login_required
-def AddCommentView(request, pk):
-    post = Post.objects.get(id=pk)
-    form = CommentForm(instance=post)
-    if request.method == 'POST':
-        form = CommentForm(request.POST, instance=post)
-        if form.is_valid():
-            author = request.user
-            content = form.cleaned_data['content']
-            comment = Comment(author=author,post=post,content=content)
-            comment.save()
-            context = {
-                'post': post,
-            }
-            # wasn't able to use redirect here for some reason, was getting error?
-            #return reverse('post-details')
-            return HttpResponseRedirect(reverse('post-details', args=(pk,)))
-            #return render(request, 'blog/post_details.html', context)
-    else:
-        form = CommentForm()    
-    context = {
-        'form': form
-    }
-    return render(request, 'blog/add_comment.html', context)
-'''
 
 class CommentCreateView(LoginRequiredMixin,CreateView):
     model = Comment
