@@ -1,10 +1,14 @@
-from django.shortcuts import render,get_object_or_404 # this import standard with django
+from django.shortcuts import render,get_object_or_404,redirect
+from django.urls.base import reverse_lazy # this import standard with django
 from .models import Post,Comment
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from .forms import CommentForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -14,7 +18,7 @@ def home(request):
     return render(request,'blog/home.html',context)
 
 def about(request):
-    context = {
+    context = { 
         'title':'About'
     }
     return render(request,'blog/about.html',context)
@@ -54,46 +58,21 @@ class UserPostListView(ListView):
         posts = Post.objects.filter(author=user).order_by('-date_posted')
         return posts
 
-
+# class-based view for PostDetailView. When using this, change all instances of a post from 'post' to 'object' in post_details.html
 #class PostDetailView(DetailView):
 #    model = Post
 #    template_name ='blog/post_details.html'
 
 def PostDetailView(request,pk):
     post = Post.objects.get(id=pk)
+    comments = Comment.objects.filter(post=post).order_by('-date_posted')
 
     context = {
         'post': post,
+        'comments':comments
     }
 
     return render(request, 'blog/post_details.html', context)
-
-'''
-class PostDetailView(DetailView):
-    model = Post
-    template_name ='blog/post_details.html'
-    context_object_name='post'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        post = Post.objects.get(id=self.pk)
-        num_comments = Comment.objects.filter(=eachProduct).count()
-        return context
-
-    # here we are querying all the comments associated with a post object, then forwarding that query set to the template
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        comments = Comment.objects.filter(post=self.get_object()).order_by('-date_posted')
-        data['comments'] = comments
-        if self.request.user.is_authenticated:
-            data['comment_form'] = CommentForm(instance=self.request.user)
-        return data
-
-    def post(self, request, *args, **kwargs):
-        new_comment = Comment(author=self.request.user,Post=self.get_object(),content=request.POST.get('content'))
-        new_comment.save()
-        return self.get(self, request, *args, **kwargs)
-'''
 
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
@@ -132,12 +111,42 @@ class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
         else:
             return False
 
+'''@login_required
+def AddCommentView(request, pk):
+    post = Post.objects.get(id=pk)
+    form = CommentForm(instance=post)
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=post)
+        if form.is_valid():
+            author = request.user
+            content = form.cleaned_data['content']
+            comment = Comment(author=author,post=post,content=content)
+            comment.save()
+            context = {
+                'post': post,
+            }
+            # wasn't able to use redirect here for some reason, was getting error?
+            #return reverse('post-details')
+            return HttpResponseRedirect(reverse('post-details', args=(pk,)))
+            #return render(request, 'blog/post_details.html', context)
+    else:
+        form = CommentForm()    
+    context = {
+        'form': form
+    }
+    return render(request, 'blog/add_comment.html', context)
+'''
+
 class CommentCreateView(LoginRequiredMixin,CreateView):
     model = Comment
-    template_name ='blog/add_comment.html'
-    fields = ['content']
+    template_name = 'blog/add_comment.html'
+    form_class=CommentForm
 
-    '''Big issue here with submitting the new comment!'''
     def form_valid(self,form):
-        form.instance.post_id = self.kwargs.get('id')
+        form.instance.post_id = self.kwargs['pk']
+        form.instance.author_id = self.request.user.id
         return super().form_valid(form)
+
+    #success_url=reverse_lazy('post-details')
+    def get_success_url(self):
+        return reverse_lazy('post-details', kwargs={'pk': self.kwargs['pk']})

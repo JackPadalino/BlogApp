@@ -23,11 +23,12 @@
         </div>
     </div>
 </article>
-{% if not object.comments.all %}
-    <h2>No comments yet...</h2>
+{% if not comments %}
+    <h3>No comments yet...</h3>
+    <a href="{% url 'add-comment' post.id %}">Add Comment </a>
 {% else %}
-    <h2>Comments({{ object.comments.count }})</h2>
-    {% for comment in object.comments.all %}
+    <h3>Comments</h3>
+    {% for comment in comments %}
         <article class="media content-section">
             <div class='row'>
                 <div class='col-md-1'>
@@ -45,16 +46,6 @@
             </div>
         </article>
     {% endfor %}
+    <a href="{% url 'add-comment' post.id %}">Add Comment </a>
 {% endif %}
-<form method="POST">
-    {% csrf_token %}
-    <fieldset class="form-group">
-        <legend class="border-bottom mb-4">New comment</legend>
-        {{ form|crispy }}
-    </fieldset>
-    <br>
-    <div class='form-group'>
-        <button class="btn btn-outline-info" type='submit'>Add comment</button>
-    </div>
-</form>
 {% endblock content %}
