@@ -1,8 +1,8 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <div class='page-heading'>
+    <!--<div class='page-heading'>
         <h1>Welcome to Snerd <b>Blog</b></h1>
-    </div>
+    </div>-->
     {% for post in posts %}
         <article class="media content-section">
             <div class='row'>
@@ -18,6 +18,9 @@
                         <h2><a class="article-title" href="{% url 'post-details' post.id %}">{{ post.title }}</a></h2>
                         <p class="article-content">{{ post.content }}</p>
                     </div>
+                    <small class='text-muted'>
+                        <a style='color:grey; text-decoration:None;' href="#">Comments</a>
+                    </small>
                 </div>
             </div>
         </article>
@@ -43,3 +46,17 @@
         {% endif %}
     {% endif %}
 {% endblock content %}
+
+{% block sidebar %}
+    <div class="content-section">
+        <h3>What's new?</h3>
+        <!--<p class='text-muted'>You can put any information here you'd like.</p>-->
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-light">Latest Posts</li>
+            <li class="list-group-item list-group-item-light">Announcements</li>
+            <li class="list-group-item list-group-item-light">Calendars</li>
+            <li class="list-group-item list-group-item-light">etc</li>
+        </ul>
+        </p>
+    </div>
+{% endblock %}
