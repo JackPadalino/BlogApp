@@ -22,4 +22,15 @@
         </div>
     </div>
 </article>
+{% if not object.comments.all %}
+    <h2>No comments yet...</h2>
+    <a href='#'>Add comment</a>
+{% else %}
+    <h2>Comments({{ object.comments.count }})</h2>
+    <a href='#'>Add comment</a>
+    {% for comment in object.comments.all %}
+        <p><b>{{ comment.author }} - {{ comment.date_posted }}</b></p>
+        <p>{{ comment.content }}</p>
+    {% endfor %}
+{% endif %}
 {% endblock content %}

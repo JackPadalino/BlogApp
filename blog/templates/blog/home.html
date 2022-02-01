@@ -19,8 +19,7 @@
                         <p class="article-content">{{ post.content }}</p>
                     </div>
                     <small class='text-muted'>
-                        <a class='comment-link' href="#">Comments</a>
-                        <a class='comment-link' href="#">Add comment</a>
+                        <a class="comment-link" href="{% url 'post-details' post.id %}">Comments({{ post.comments.count }})</a>
                     </small>
                 </div>
             </div>
