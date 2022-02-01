@@ -22,5 +22,9 @@
             <button class="btn btn-outline-info" type='submit'>Update</button>
         </div>
     </form>
+    <br>
+    <small class='text-muted'>
+        <a style='color:red; text-decoration:None;' href="{% url 'account-delete' user.id %}">Delete my account</a>
+    </small>
 </div>
 {% endblock content %}
