@@ -13,7 +13,7 @@ body {
   }
   
   .main-navigation-bar {
-    background-color: rgb(53, 112, 168);;
+    background-color: rgb(53, 112, 168);
   }
   
   .site-header .navbar-nav .nav-link {
@@ -44,12 +44,12 @@ body {
   }
 
   .article-title {
-    color: #444444;
+    color: rgb(53, 112, 168);
     text-decoration: none;
   }
   
   a.article-title:hover {
-    color: #428bca;
+    color: rgb(53, 112, 168);
     text-decoration: none;
   }
   
@@ -99,7 +99,7 @@ body {
   }
 
   .edit-post-link{
-    color:#444444 !important;
+    color:rgb(53, 112, 168) !important;
     text-decoration:None;
     margin-right:5px;
   }
