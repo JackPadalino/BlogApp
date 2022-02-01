@@ -100,6 +100,7 @@ class CommentCreateView(LoginRequiredMixin,CreateView):
     template_name ='blog/add_comment.html'
     fields = ['content']
 
+    '''Big issue here with submitting the new comment!'''
     def form_valid(self,form):
-        form.instance.author = self.request.user
+        form.instance.post_id = self.kwargs.get('id')
         return super().form_valid(form)

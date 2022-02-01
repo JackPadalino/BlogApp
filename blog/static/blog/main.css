@@ -95,5 +95,17 @@ body {
   .comment-link{
     color:grey !important;
     text-decoration:None;
-    margin-right:10px;
+
+  }
+
+  .edit-post-link{
+    color:#444444 !important;
+    text-decoration:None;
+    margin-right:5px;
+  }
+
+  .delete-post-link{
+    color:red !important;
+    text-decoration:None;
+    margin-right:5px;
   }

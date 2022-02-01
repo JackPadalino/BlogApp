@@ -15,8 +15,8 @@
                 <h2 class='article-title'>{{ object.title }}</h2>
                 <p class="article-content">{{ object.content }}</p>
                 {% if object.author == user %}
-                    <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'post-update' object.id %}">Edit</a>
-                    <a class='btn btn-danger btn-sm mt-1 mb-1' href="{% url 'post-delete' object.id %}">Delete</a>
+                    <a class='edit-post-link' href="{% url 'post-update' object.id %}">Edit</a>
+                    <a class='delete-post-link' href="{% url 'post-delete' object.id %}">Delete</a>
                 {% endif %}
             </div>
         </div>
@@ -24,13 +24,27 @@
 </article>
 {% if not object.comments.all %}
     <h2>No comments yet...</h2>
-    <a href='#'>Add comment</a>
+    <a href="{% url 'add-comment' object.id %}">Add comment</a>
 {% else %}
     <h2>Comments({{ object.comments.count }})</h2>
-    <a href='#'>Add comment</a>
+    <a href="{% url 'add-comment' object.id %}">Add comment</a>
     {% for comment in object.comments.all %}
-        <p><b>{{ comment.author }} - {{ comment.date_posted }}</b></p>
-        <p>{{ comment.content }}</p>
+        <article class="media content-section">
+            <div class='row'>
+                <div class='col-md-1'>
+                    <img class="rounded-circle article-img" src="{{ comment.author.profile.image.url }}">
+                </div>
+                <div class='col-md-10'>
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <a class="mr-2" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
+                            <small class="text-muted">{{ comment.date_posted|date:"F d, Y" }}</small>
+                        </div>
+                        <p class="article-content">{{ comment.content }}</p>
+                    </div>
+                </div>
+            </div>
+        </article>
     {% endfor %}
 {% endif %}
 {% endblock content %}
