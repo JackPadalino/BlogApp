@@ -11,14 +11,13 @@
                 <div class="article-metadata">
                     <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                     <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-
+                    {% if post.author == user %}
+                        <a class='edit-post-link' href="{% url 'post-update' post.id %}">Edit</a>
+                        <a class='delete-post-link' href="{% url 'post-delete' post.id %}">Delete</a>
+                    {% endif %}
                 </div>
                 <h2 class='article-title'>{{ post.title }}</h2>
                 <p class="article-content">{{ post.content }}</p>
-                {% if post.author == user %}
-                    <a class='edit-post-link' href="{% url 'post-update' post.id %}">Edit</a>
-                    <a class='delete-post-link' href="{% url 'post-delete' post.id %}">Delete</a>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -34,7 +33,7 @@
         <article class="media content-section">
             <div class='row'>
                 <div class='col-md-1'>
-                    <img class="rounded-circle article-img" src="{{ comment.author.profile.image.url }}">
+                    <img class="rounded-circle article-img" src="{#{{ comment.author.profile.image.url }}#}">
                 </div>
                 <div class='col-md-10'>
                     <div class="media-body">
