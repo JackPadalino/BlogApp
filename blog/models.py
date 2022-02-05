@@ -12,7 +12,6 @@ class Post(models.Model):
     #this sets the reltionship between posts and authors, called a 'one to many' relationship
     #by saying 'on_delete = models.CASCADE' we are saying that 'on the deletion of a user, delete all their posts too'
     author = models.ForeignKey(User,on_delete=models.CASCADE)
-    likes = models.ManyToManyField(User,related_name='blog_post')
 
     def __str__(self):
         return f'{self.title} | {self.content} | {self.date_posted} | {self.author}'

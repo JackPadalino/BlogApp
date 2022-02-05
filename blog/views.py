@@ -37,6 +37,9 @@ class PostListView(ListView):
     ordering = ['-date_posted'] # ordering posts from newest to oldest
     paginate_by = 5
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+
 # here we are creating a class view that will display only the posts made by a certain user when 
 # their name is clicked on the main page
 class UserPostListView(ListView):
@@ -117,9 +120,3 @@ class CommentCreateView(LoginRequiredMixin,CreateView):
 
     def get_success_url(self):
         return reverse_lazy('post-details', kwargs={'pk': self.kwargs['pk']})
-
-#class LikeCreateView(LoginRequiredMixin,CreateView):
-#    model = Like
-#    
-#    def get_success_url(self):
-#        return reverse_lazy('blog-home')
