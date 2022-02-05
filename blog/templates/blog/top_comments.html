@@ -20,14 +20,3 @@
         </article>
     {% endfor %}
 {% endblock content %}
-{% block sidebar %}
-    <div class="content-section">
-        <h3>What's new?</h3>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-light"><a href="{% url 'latest-posts' %}">Top 10 latest posts</a></li>
-            <li class="list-group-item list-group-item-light"><a href="{% url 'top-comments' %}">Top 10 commented posts</a></li>
-            <li class="list-group-item list-group-item-light">Liked posts</li>
-        </ul>
-        </p>
-    </div>
-{% endblock %}
