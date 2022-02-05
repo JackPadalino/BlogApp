@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls.base import reverse_lazy # this import standard with django
-from .models import Post,Comment
+from .models import Post,Comment#,Like
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView,UpdateView,DeleteView
@@ -117,3 +117,9 @@ class CommentCreateView(LoginRequiredMixin,CreateView):
 
     def get_success_url(self):
         return reverse_lazy('post-details', kwargs={'pk': self.kwargs['pk']})
+
+#class LikeCreateView(LoginRequiredMixin,CreateView):
+#    model = Like
+#    
+#    def get_success_url(self):
+#        return reverse_lazy('blog-home')
