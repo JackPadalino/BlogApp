@@ -2,25 +2,18 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <article class="media content-section">
-    <div class='row'>
-        <!--<div class='col-md-1'>
-            <img class="rounded-circle article-img" src="{#{{ post.author.profile.image.url }}#}">
-        </div>-->
-        <!--<div class='col-md-10'>-->
-        <div class="media-body">
-            <div class="article-metadata">
-                <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-                <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                {% if post.author == user %}
-                    <a class='edit-post-link' href="{% url 'post-update' post.id %}">Edit</a>
-                    <a class='delete-post-link' href="{% url 'post-delete' post.id %}">Delete</a>
-                {% endif %}
-            </div>
-            <h2 class='article-title'>{{ post.title }}</h2>
-            <p class="article-content">{{ post.content }}</p>
+    <div class="media-body">
+        <div class="article-metadata">
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+            <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+            {% if post.author == user %}
+                <span style='text-align:end;'><a class='edit-post-link' href="{% url 'post-update' post.id %}">Edit</a></span>
+                <a class='delete-post-link' href="{% url 'post-delete' post.id %}">Delete</a>
+            {% endif %}
         </div>
-        <!--</div>-->
+        <h2 class='article-title'>{{ post.title }}</h2>
+        <p class="article-content">{{ post.content }}</p>
     </div>
 </article>
 {% if not comments %}
@@ -32,20 +25,13 @@
     <h3>Comments</h3>
     {% for comment in comments %}
         <article class="media content-section">
-            <div class='row'>
-                <!--<div class='col-md-1'>
-                    <img class="rounded-circle article-img" src="{#{{ comment.author.profile.image.url }}#}">
-                </div>-->
-                <!--<div class='col-md-10'>-->
-                <div class="media-body">
-                    <div class="article-metadata">
-                        <img class="rounded-circle article-img" src="{{ comment.author.profile.image.url }}">
-                        <a class="mr-2" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
-                        <small class="text-muted">{{ comment.date_posted|date:"F d, Y" }}</small>
-                    </div>
-                    <p class="article-content">{{ comment.content }}</p>
+            <div class="media-body">
+                <div class="article-metadata">
+                    <img class="rounded-circle article-img" src="{{ comment.author.profile.image.url }}">
+                    <a class="mr-2" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
+                    <small class="text-muted">{{ comment.date_posted|date:"F d, Y" }}</small>
                 </div>
-                <!--</div>-->
+                <p class="article-content">{{ comment.content }}</p>
             </div>
         </article>
     {% endfor %}
