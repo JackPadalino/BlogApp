@@ -9,6 +9,7 @@ from .forms import CommentForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 # Create your views here.
 def home(request):
@@ -37,8 +38,19 @@ class PostListView(ListView):
     ordering = ['-date_posted'] # ordering posts from newest to oldest
     paginate_by = 5
 
-    def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
+def LatestPostsListView(request):
+    posts = Post.objects.all().order_by('-date_posted')[:10]
+    context = {
+        'posts':posts
+    }
+    return render(request,'blog/latest_posts.html',context)
+
+def TopCommentsListView(request):
+    posts = Post.objects.annotate(count=Count('comments')).order_by('-count')[:10]
+    context = {
+        'posts':posts
+    }
+    return render(request,'blog/top_comments.html',context)
 
 # here we are creating a class view that will display only the posts made by a certain user when 
 # their name is clicked on the main page

@@ -44,8 +44,8 @@
         </nav>
     </header>
     <main role="main" class="container">
-        <div class="row">
-            <div class="col-md-6">
+        <div>
+            <div style='float:left' class="col-md-7">
                 {% if messages %}
                 {% for message in messages %}
                 <div class='alert alert-{{ message.tags }}'>
@@ -55,9 +55,9 @@
                 {% endif %}
                 {% block content %}{% endblock %}
             </div>
-            <!--<div class="col-md-4">
-                {#{% block sidebar %}{% endblock %}#}
-            </div>-->
+            <div style='float:right' class="col-md-4">
+                {% block sidebar %}{% endblock %}
+            </div>
         </div>
     </main>
     <!-- Optional JavaScript; choose one of the two! -->

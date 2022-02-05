@@ -19,28 +19,7 @@
             </small>
         </article>
     {% endfor %}
-    <!--This block creates the pagination functionality of the block-->
-    {% if is_paginated %}
-        {% if page_obj.has_previous %}
-            <a class="btn btn-outline-primary mb-4" href="?page=1">First</a>
-            <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
-        <!--This for loop block creates the 'in between' pages for pagination-->
-        <!--Removing this for loop section gets rid of 1,2,3,3...-->
-        {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-                <a class="btn btn-primary mb-4" href="?page={{ num }}">{{ num }}</a>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a class="btn btn-outline-primary mb-4" href="?page={{ num }}">{{ num }}</a>
-            {% endif %}
-        {% endfor %}
-        {% if page_obj.has_next %}
-            <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-        {% endif %}
-    {% endif %}
 {% endblock content %}
-
 {% block sidebar %}
     <div class="content-section">
         <h3>What's new?</h3>
