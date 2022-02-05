@@ -35,19 +35,5 @@
             </div>
         </article>
     {% endfor %}
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">New comment</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <br>
-            <div class='form-group'>
-                <button class="btn btn-outline-info" type='submit'>Add comment</button>
-            </div>
-        </form>
-    </div>
-    <a href="{% url 'add-comment' post.id %}">Add Comment </a>
 {% endif %}
 {% endblock content %}
