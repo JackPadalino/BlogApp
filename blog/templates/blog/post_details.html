@@ -4,7 +4,7 @@
 <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
-            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+            <!--<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">-->
             <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
             <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
             {% if post.author == user %}
@@ -28,7 +28,7 @@
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                    <img class="rounded-circle article-img" src="{{ comment.author.profile.image.url }}">
+                    <!--<img class="rounded-circle article-img" src="{{ comment.author.profile.image.url }}">-->
                     <a class="mr-2" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
                     <small class="text-muted">{{ comment.date_posted|date:"F d, Y" }}</small>
                 </div>
